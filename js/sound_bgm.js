@@ -98,14 +98,16 @@ const BGM = (() => {
    * @param {string} key
    */
   function play(key) {
-    if (!_bgmEnabled) return;
-    if (!BGM_DEF[key]) {
-      console.warn('[BGM] 未定義のキー: ' + key);
-      return;
-    }
+  console.log("BGM呼ばれた:", key);
 
-    // 同じキーが再生中なら何もしない
-    if (_currentKey === key) return;
+  if (!_bgmEnabled) return;
+  if (!BGM_DEF[key]) {
+    console.warn('[BGM] 未定義のキー: ' + key);
+    return;
+  }
+
+  // 同じキーが再生中なら何もしない
+  if (_currentKey === key) return;
 
     // 現在再生中のBGMを停止
     _stopCurrent();
