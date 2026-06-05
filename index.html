@@ -1542,6 +1542,11 @@ function showScreen(id){
   if(id==='title'||id==='stage'||id==='result'){
     if(!rainRaf) animateRain();
   }
+  // BGM切り替え
+  if(id==='title')  BGM.play('title');
+  if(id==='stage')  BGM.play('select');
+  if(id==='result') BGM.play('result');
+  if(id==='endlessResult') BGM.play('result');
   if(id==='stage'){
     // 解放演出フラグがある場合は「全ランプ点灯のロックカード」で描画し、演出後に切り替える
     const doUnlockAnim = _pendingUnlockAnim;
@@ -2234,6 +2239,7 @@ function startGame(si){
   document.getElementById('ui-stage').textContent=STAGES[si].label;
   document.getElementById('ui-time').classList.remove('warn');
   updateHUD();
+  BGM.play('stage');
   if(raf) cancelAnimationFrame(raf);
   lastT=performance.now();
   raf=requestAnimationFrame(loop);
@@ -2288,6 +2294,7 @@ function startEndless(){
   document.getElementById('endless-rush-badge').style.display='none';
 
   updateEndlessHUD();
+  BGM.play('endless');
   if(raf) cancelAnimationFrame(raf);
   lastT=performance.now();
   raf=requestAnimationFrame(loop);
@@ -3098,6 +3105,7 @@ function clearBurst(){
 
 function triggerRushEntry(){
   const W=gc.width,H=gc.height;
+  BGM.play('rush');
 
   try{
     const ac=new(window.AudioContext||window.webkitAudioContext)();
@@ -3214,6 +3222,7 @@ function loop(now){
       if(!endlessRushActive&&endlessNextRush<=0){
         endlessRushActive=true;endlessRushDur=15;
         Sound.se('rush_start');
+        BGM.play('rush');
         const _rb=document.getElementById('endless-rush-badge');
         _rb.style.transition='none';
         _rb.style.display='block';
@@ -3227,6 +3236,7 @@ function loop(now){
         if(endlessRushDur<=0){
           endlessRushActive=false;
           endlessNextRush=getNextRushInterval();
+          BGM.play('endless');
           document.getElementById('endless-rush-badge').style.display='none';
         }
       }
