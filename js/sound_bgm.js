@@ -15,12 +15,12 @@ const BGM = (() => {
   // BGM定義
   // =================================================================
   const BGM_DEF = {
-    title   : { file: 'assets/sound/bgm/bgm_title.mp3',   vol: 0.7 },
-    select  : { file: 'assets/sound/bgm/bgm_select.mp3',  vol: 0.7 },
-    stage   : { file: 'assets/sound/bgm/bgm_stage.mp3',   vol: 0.7 },
-    endless : { file: 'assets/sound/bgm/bgm_endless.mp3', vol: 0.7 },
-    rush    : { file: 'assets/sound/bgm/bgm_rush.mp3',    vol: 0.8 },
-    result  : { file: 'assets/sound/bgm/bgm_result.mp3',  vol: 0.7 },
+    title   : { file: 'assets/sound/bgm/bgm_title.MP3',   vol: 0.7 },
+    select  : { file: 'assets/sound/bgm/bgm_select.MP3',  vol: 0.7 },
+    stage   : { file: 'assets/sound/bgm/bgm_stage.MP3',   vol: 0.7 },
+    endless : { file: 'assets/sound/bgm/bgm_endless.MP3', vol: 0.7 },
+    rush    : { file: 'assets/sound/bgm/bgm_rush.MP3',    vol: 0.8 },
+    result  : { file: 'assets/sound/bgm/bgm_result.MP3',  vol: 0.7 },
   };
 
   // key → HTMLAudioElement のキャッシュ
@@ -98,16 +98,14 @@ const BGM = (() => {
    * @param {string} key
    */
   function play(key) {
-  console.log("BGM呼ばれた:", key);
+    if (!_bgmEnabled) return;
+    if (!BGM_DEF[key]) {
+      console.warn('[BGM] 未定義のキー: ' + key);
+      return;
+    }
 
-  if (!_bgmEnabled) return;
-  if (!BGM_DEF[key]) {
-    console.warn('[BGM] 未定義のキー: ' + key);
-    return;
-  }
-
-  // 同じキーが再生中なら何もしない
-  if (_currentKey === key) return;
+    // 同じキーが再生中なら何もしない
+    if (_currentKey === key) return;
 
     // 現在再生中のBGMを停止
     _stopCurrent();
